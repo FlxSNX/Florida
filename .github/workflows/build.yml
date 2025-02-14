@@ -25,7 +25,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
            
-            core.setOutput('FRIDA_VERSION', '16.6.7');
+            core.setOutput('FRIDA_VERSION', '16.6.8');
 
       - name: Split Repository Name
         id: split_name
