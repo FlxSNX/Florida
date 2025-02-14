@@ -18,6 +18,15 @@ jobs:
       FRIDA_VERSION: ${{ steps.pullFridaLatestRelease.outputs.FRIDA_VERSION }}
       ALREADY_RELEASE: ${{ steps.checkReleaseVersion.outputs.ALREADY_RELEASE }}
     steps:
+      - name: Pull Frida Latest Release
+        id: pullFridaLatestRelease
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+           
+            core.setOutput('FRIDA_VERSION', '16.6.7');
+
       - name: Split Repository Name
         id: split_name
         run: |
@@ -33,7 +42,7 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             try {
-              const releaseVersion = '16.6.7'
+              const releaseVersion = '${{ steps.pullFridaLatestRelease.outputs.FRIDA_VERSION }}'
               const releaseResponse = await github.repos.getReleaseByTag({
                 owner: '${{ steps.split_name.outputs.owner }}',
                 repo: '${{ steps.split_name.outputs.repo }}',
@@ -42,7 +51,7 @@ jobs:
               const {
                 data: { tag_name: ver }
               } = releaseResponse;
-              if (ver == '16.6.7'){
+              if (ver == '${{ steps.pullFridaLatestRelease.outputs.FRIDA_VERSION }}'){
                   if ( ${{ ( github.event_name == 'push' || github.event_name == 'workflow_dispatch') }}){
                     core.setOutput('ALREADY_RELEASE', '2');
                   } else {
@@ -65,7 +74,7 @@ jobs:
         if: ${{ steps.checkReleaseVersion.outputs.ALREADY_RELEASE == '2' }}
         uses: dev-drprasad/delete-tag-and-release@v1.0
         with:
-          tag_name: '16.6.7'
+          tag_name: ${{ steps.pullFridaLatestRelease.outputs.FRIDA_VERSION }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           delete_release: true
 
