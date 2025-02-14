@@ -24,14 +24,14 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const releaseResponse = await github.repos.getLatestRelease({
-              owner: 'FlxSNX',
-              repo: 'frida',
-            })
-            const {
-              data: { tag_name: ver }
-            } = releaseResponse;
-            core.setOutput('FRIDA_VERSION', ver);
+            # const releaseResponse = await github.repos.getLatestRelease({
+            #   owner: 'FlxSNX',
+            #   repo: 'frida',
+            # })
+            # const {
+            #   data: { tag_name: ver }
+            # } = releaseResponse;
+            core.setOutput('FRIDA_VERSION', "16.6.7");
 
       - name: Split Repository Name
         id: split_name
