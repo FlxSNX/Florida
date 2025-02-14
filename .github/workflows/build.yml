@@ -139,8 +139,17 @@ jobs:
         export ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}
         echo "ANDROID_NDK_ROOT=$ANDROID_NDK_ROOT"
         
-        git clone --recurse-submodules https://${{ secrets.TOKEN }}@github.com/FlxSNX/frida
+        git clone https://${{ secrets.ACCESS_TOKEN }}@github.com/FlxSNX/frida.git
         cd frida
+
+        # 更新子模块 URL
+        git submodule sync
+        git config submodule.subprojects/frida-core.url https://${{ secrets.ACCESS_TOKEN }}@github.com/FlxSNX/frida-gadget-mod.git
+
+        # 初始化并更新子模块
+        git submodule update --init --recursive
+        
+        
         for path in ../patches/*
         do
           name=$(basename $path)
