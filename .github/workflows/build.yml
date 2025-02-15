@@ -133,8 +133,6 @@ jobs:
     - name: build frida for Android
       shell: bash
       run: |
-        git config --global user.name "FlxSNX"
-        git config --global user.email "bikamoe@gmail.com"
         
         export ANDROID_NDK_ROOT=${{ steps.setup-ndk.outputs.ndk-path }}
         echo "ANDROID_NDK_ROOT=$ANDROID_NDK_ROOT"
