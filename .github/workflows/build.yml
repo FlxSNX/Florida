@@ -139,7 +139,7 @@ jobs:
         
         git clone https://oauth2:${{ secrets.TOKEN }}@github.com/FlxSNX/frida
         cd frida
-
+        git clone https://oauth2:${{ secrets.TOKEN }}@github.com/FlxSNX/frida-gadget-mod.git
         # 更新子模块 URL
         git submodule sync
         git config submodule.subprojects/frida-core.url https://oauth2:${{ secrets.TOKEN }}@github.com/FlxSNX/frida-gadget-mod.git
